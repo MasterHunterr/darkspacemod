@@ -275,7 +275,7 @@
             }
             showResult(
               hr +
-                "<h1><b><font color=%22386E38%22>Auto HEN installer initialized successfully.</font></b></h1><h3><b><font color=%22000000%22><span style='color:#000000;'>The HEN installation payload will launch automatically!</span></b></h3>"
+                "<div style='text-align:center'><img src='./11.png' alt='HEN Initialization Success' style='max-width:300px;margin:20px auto'/></div>"
             );
             //enable_trigger();
             setTimeout(function () {
@@ -293,7 +293,7 @@
           debug = true;
           logAdd(
             br +
-              "HEN Enabler initialization failed because the following exception was thrown during execution:" +
+              "<div style='text-align:center'><img src='./8.png' alt='HEN Enabler Error' style='max-width:300px;margin:20px auto'/></div>" +
               br +
               e +
               " at : " +
@@ -307,7 +307,7 @@
         clearLogEntry();
         showResult(
           hr +
-            "<h2><b><span style='color:#000000;'>Installing HEN...</span></b></h2>"
+            "<div style='text-align:center'><img src='./6.png' alt='Installing HEN' style='max-width:300px;margin:20px auto'/></div>"
         );
         disable_all();
         setTimeout(trigger, 1000, jump_1_addr);
@@ -315,8 +315,8 @@
           rop_exit_hen,
           5000,
           hr +
-            "<h1><b><font color=%22386E38%22>HEN is successfully installed</font></b></h1>",
-          "<h1><b><font color='red'>HEN Failure! Restart PS3 and retry!</font></b></h1>"
+            "<div style='text-align:center'><img src='./7.png' alt='HEN Successfully Installed' style='max-width:300px;margin:20px auto'/></div>",
+          "<div style='text-align:center'><img src='./12.png' alt='HEN Installation Failed' style='max-width:300px;margin:20px auto'/></div>"
         );
         cleanGUI();
       }
@@ -372,10 +372,12 @@
           name="DEX"
           disabled=""
           onclick="dex();"
-          style="margin-left: 10px"
-        />
-        * If you check the DEX Mode box and do not get an alert, reload browser
-        or refresh page, or enabling HEN will freeze!</span
+          style="margin-left: 10px" />
+        <img
+          src="./10.png"
+          alt="If you check the DEX Mode box and do not get an alert, reload browser or refresh page, or enabling HEN will freeze!"
+          style="display: block; max-width: 300px; margin: 10px auto"
+      /></span>
       >
     </p>
     <p style="text-align: center">
