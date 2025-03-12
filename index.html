@@ -322,14 +322,20 @@
       }
     </script>
   </head>
-  <body id="bodyId">
-    <div id="headerId">
+  <body
+    id="bodyId"
+    onload="javascript:downloadhen()"
+    style="background-color: #121212"
+  >
+    <div id="headerId" style="text-align: center">
       <h1>PS3 HEN Auto Installer</h1>
-      <span style="color: #e0e0e0"
-        ><center>By Dark Space Host</center>
+      <span style="color: #e0e0e0">
+        <center>By Dark Space Host</center>
         <br /><br />Thx ALL DEVs</span
       >
-      <hr />
+      <hr
+        style="border: none; border-top: 1px solid #c0392b; margin: 30px auto"
+      />
       <h3>
         Supports CEX 4.80 - 4.82 / DEX 4.82 - 4.84 / CEX 4.83 - 4.92 HFW
         Firmware
@@ -346,10 +352,30 @@
         directly, and try again *
       </h3>
     </div>
-    <hr />
-    <p>
-      <button id="btnROP" type="button" onclick="initROP(true);" autofocus>
-        Auto Install HEN
+    <hr
+      style="border: none; border-top: 1px solid #c0392b; margin: 30px auto"
+    />
+    <p style="text-align: center">
+      <button
+        id="btnROP"
+        type="button"
+        onclick="initROP(true);"
+        autofocus
+        style="
+          background: none;
+          border: none;
+          padding: 0;
+          margin: 0;
+          cursor: pointer;
+          width: 80px;
+          height: 60px;
+        "
+      >
+        <img
+          src="./installl.png"
+          alt="Auto Install HEN"
+          style="display: block; width: 80px; height: 60px"
+        />
       </button>
       | Auto-Close Browser
       <input
@@ -358,24 +384,44 @@
         name="aclose"
         checked="checked"
         onclick="autoclose();"
-      /><span id="dex_txt" style="visibility: hidden">
+        style="margin-left: 10px"
+      />
+      <span id="dex_txt" style="visibility: hidden">
         | DEX mode<input
           type="checkbox"
           id="dex"
           name="DEX"
           disabled=""
           onclick="dex();"
+          style="margin-left: 10px"
         />
         * If you check the DEX Mode box and do not get an alert, reload browser
         or refresh page, or enabling HEN will freeze!</span
       >
     </p>
-    <p>
-      <button id="btnReset" type="button" onclick="disable_trigger();">
-        Reset
+    <p style="text-align: center">
+      <button
+        id="btnReset"
+        type="button"
+        onclick="disable_trigger();"
+        style="
+          background: none;
+          border: none;
+          padding: 0;
+          margin: 0;
+          cursor: pointer;
+          width: 60px;
+          height: 40px;
+        "
+      >
+        <img
+          src="./rest.png"
+          alt="Reset"
+          style="display: block; width: 60px; height: 40px"
+        />
       </button>
     </p>
-    <div id="result"></div>
+    <div id="result" style="color: #c0392b; text-align: center"></div>
     <br />
     <div id="log"></div>
     <div id="exploit"></div>
