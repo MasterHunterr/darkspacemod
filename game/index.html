@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PS3 Games Library by DARK SPACE</title>
+    <style>
+      /* Base styles optimized for PS3 browser compatibility */
+      body {
+        background-color: #0a0a0a;
+        color: #f0f0f0;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+      .container {
+        max-width: 1280px; /* Better for PS3 720p/1080p resolution */
+        margin: 0 auto;
+        padding: 15px;
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 25px;
+        border-bottom: 2px solid #333;
+        padding-bottom: 15px;
+      }
+      .header h1 {
+        color: #00aaff;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        font-size: 32px;
+        margin: 0;
+        letter-spacing: 1px;
+      }
+      .stats-container {
+        background: linear-gradient(to bottom, #2a2a2a, #222222);
+        border-radius: 10px;
+        padding: 12px;
+        margin-bottom: 25px;
+        text-align: center;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+        border: 1px solid #333;
+      }
+      .stats-container .counter {
+        font-size: 28px;
+        font-weight: bold;
+        color: #00aaff;
+      }
+      .stats-container .counter-label {
+        font-size: 14px;
+        color: #cccccc;
+        margin-top: 5px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .search-container {
+        margin-bottom: 25px;
+        text-align: center;
+      }
+      #search-input {
+        width: 75%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #444;
+        background-color: #1a1a1a;
+        color: #f0f0f0;
+        font-size: 16px;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+      }
+      #search-input:focus {
+        outline: 2px solid #00aaff;
+        border-color: #00aaff;
+      }
+      /* PS3 controller focus indicator */
+      #search-input.controller-focus {
+        outline: 3px solid #ffaa00;
+        border-color: #ffaa00;
+        background-color: #222222;
+      }
+      /* Search results highlight */
+      .highlight-match {
+        background-color: rgba(0, 170, 255, 0.3);
+        padding: 0 2px;
+        border-radius: 3px;
+      }
+      .games-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+      .game-card {
+        background: linear-gradient(to bottom, #252525, #1a1a1a);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        border: 1px solid #333;
+        position: relative;
+      }
+      /* Simplified hover for PS3 compatibility */
+      .game-card:hover,
+      .game-card:focus {
+        border-color: #00aaff;
+        box-shadow: 0 5px 20px rgba(0, 170, 255, 0.3);
+      }
+      .game-image {
+        width: 100%;
+        height: 180px;
+        object-fit: contain;
+        background-color: #222;
+        border-bottom: 1px solid #333;
+        padding: 5px 0;
+      }
+      .game-info {
+        padding: 15px;
+      }
+      .game-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #ffffff;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .game-subtitle {
+        font-size: 14px;
+        color: #bbbbbb;
+        margin-bottom: 12px;
+        height: 40px;
+        overflow: hidden;
+      }
+      .download-btn {
+        display: block;
+        width: 100%;
+        padding: 12px 0;
+        background: linear-gradient(to bottom, #0088cc, #006699);
+        color: #ffffff;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+        border: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      .download-btn:hover,
+      .download-btn:focus {
+        background: linear-gradient(to bottom, #00aaff, #0088cc);
+        outline: none;
+      }
+      .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 35px;
+        padding: 10px 0;
+      }
+      .pagination-btn {
+        padding: 10px 20px;
+        margin: 0 8px;
+        background: linear-gradient(to bottom, #333333, #222222);
+        color: #ffffff;
+        border: 1px solid #444;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        min-width: 100px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      .pagination-btn:hover {
+        background: linear-gradient(to bottom, #444444, #333333);
+      }
+      .pagination-btn:disabled {
+        background: #1a1a1a;
+        color: #555555;
+        border-color: #333;
+        cursor: not-allowed;
+        box-shadow: none;
+      }
+      .loading {
+        text-align: center;
+        font-size: 20px;
+        margin: 30px 0;
+        color: #00aaff;
+        text-shadow: 0 0 5px rgba(0, 170, 255, 0.5);
+      }
+      /* Optimized media queries for PS3 and different resolutions */
+      @media (max-width: 1280px) {
+        .games-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      @media (max-width: 960px) {
+        .games-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 600px) {
+        .games-grid {
+          grid-template-columns: 1fr;
+        }
+        .container {
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>DARK SPACE</h1>
+      </div>
+
+      <div class="stats-container">
+        <div id="download-counter" class="counter">0</div>
+        <div class="counter-label">Available Downloads</div>
+      </div>
+
+      <div class="search-container">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search for games..."
+        />
+      </div>
+
+      <div id="games-container" class="games-grid"></div>
+
+      <div id="loading" class="loading">Loading games...</div>
+
+      <div class="pagination">
+        <button id="prev-btn" class="pagination-btn" disabled>Previous</button>
+        <button id="next-btn" class="pagination-btn">Next</button>
+      </div>
+    </div>
+
+    <script>
+      // Variables to store game data and pagination state
+      var allGames = [];
+      var filteredGames = [];
+      var currentPage = 1;
+      var gamesPerPage = 12;
+
+      // DOM elements
+      var gamesContainer = document.getElementById("games-container");
+      var searchInput = document.getElementById("search-input");
+      var prevBtn = document.getElementById("prev-btn");
+      var nextBtn = document.getElementById("next-btn");
+      var loadingElement = document.getElementById("loading");
+
+      // Load games data from JSON file
+      function loadGames() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "games.json", true);
+
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            try {
+              allGames = JSON.parse(xhr.responseText);
+              // Ensure all games have proper image paths
+              allGames.forEach(function (game) {
+                if (!game.image_path && game.image) {
+                  game.image_path = game.image.startsWith("/")
+                    ? game.image.substring(1)
+                    : game.image;
+                }
+              });
+              filteredGames = allGames.slice();
+              loadingElement.style.display = "none";
+
+              // Update the download counter with the total number of games
+              document.getElementById("download-counter").textContent =
+                allGames.length;
+
+              displayGames();
+            } catch (e) {
+              loadingElement.textContent = "Error parsing game data.";
+              console.error("Error parsing JSON:", e);
+            }
+          } else {
+            loadingElement.textContent = "Error loading game data.";
+            console.error("Error loading games.json");
+          }
+        };
+
+        xhr.onerror = function () {
+          loadingElement.textContent = "Error loading game data.";
+          console.error("Request error");
+        };
+
+        xhr.send();
+      }
+
+      // Display games for the current page
+      function displayGames() {
+        gamesContainer.innerHTML = "";
+
+        var startIndex = (currentPage - 1) * gamesPerPage;
+        var endIndex = startIndex + gamesPerPage;
+        var currentGames = filteredGames.slice(startIndex, endIndex);
+
+        if (currentGames.length === 0) {
+          gamesContainer.innerHTML =
+            '<p style="grid-column: span 4; text-align: center;">No games found.</p>';
+          return;
+        }
+
+        // Create a document fragment for better performance
+        var fragment = document.createDocumentFragment();
+
+        for (var i = 0; i < currentGames.length; i++) {
+          var game = currentGames[i];
+          var gameCard = document.createElement("div");
+          gameCard.className = "game-card";
+
+          // Improved image loading with better fallback handling for PS3
+          var imgSrc = game.image_path || "";
+          var fallbackImg =
+            "imge/" + game.title.replace(/[^a-zA-Z0-9]/g, "") + ".png";
+          var defaultImg = "imge/PS3.png";
+
+          gameCard.innerHTML =
+            '\
+                    <img class="game-image" src="' +
+            imgSrc +
+            '" alt="' +
+            game.title +
+            '" onerror="if(!this.retriedLoad){this.retriedLoad=true;this.src=\'' +
+            fallbackImg +
+            "';}else{this.src='" +
+            defaultImg +
+            '\';}"> \
+                    <div class="game-info"> \
+                        <div class="game-title">' +
+            game.title +
+            '</div> \
+                        <div class="game-subtitle">' +
+            game.info +
+            '</div> \
+                        <a href="' +
+            game.download_url +
+            '" class="download-btn" target="_blank">Download</a> \
+                    </div>';
+
+          fragment.appendChild(gameCard);
+        }
+
+        // Append all cards at once for better performance
+        gamesContainer.appendChild(fragment);
+
+        // Update pagination buttons
+        updatePaginationButtons();
+      }
+
+      // Update the state of pagination buttons
+      function updatePaginationButtons() {
+        var totalPages = Math.ceil(filteredGames.length / gamesPerPage);
+
+        prevBtn.disabled = currentPage <= 1;
+        nextBtn.disabled = currentPage >= totalPages;
+      }
+
+      // Filter games based on search input
+      function filterGames() {
+        var searchTerm = searchInput.value.toLowerCase();
+
+        if (searchTerm === "") {
+          filteredGames = allGames.slice();
+        } else {
+          filteredGames = allGames.filter(function (game) {
+            return (
+              game.title.toLowerCase().includes(searchTerm) ||
+              game.info.toLowerCase().includes(searchTerm)
+            );
+          });
+        }
+
+        currentPage = 1;
+        displayGames();
+      }
+
+      // Event listeners
+      searchInput.addEventListener("input", function () {
+        filterGames();
+      });
+
+      prevBtn.addEventListener("click", function () {
+        if (currentPage > 1) {
+          currentPage--;
+          displayGames();
+        }
+      });
+
+      nextBtn.addEventListener("click", function () {
+        var totalPages = Math.ceil(filteredGames.length / gamesPerPage);
+        if (currentPage < totalPages) {
+          currentPage++;
+          displayGames();
+        }
+      });
+
+      // Initialize the page
+      loadGames();
+    </script>
+  </body>
+</html>
